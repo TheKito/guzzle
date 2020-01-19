@@ -32,7 +32,7 @@ class StreamHandler
             \usleep($options['delay'] * 1000);
         }
 
-        $startTime = isset($options['on_stats']) ? \GuzzleHttp\_current_time() : null;
+        $startTime = isset($options['on_stats']) ? \GuzzleHttp\Functions::_current_time() : null;
 
         try {
             // Does not support the expect header.
@@ -81,7 +81,7 @@ class StreamHandler
             $stats = new TransferStats(
                 $request,
                 $response,
-                \GuzzleHttp\_current_time() - $startTime,
+                \GuzzleHttp\Functions::_current_time() - $startTime,
                 $error,
                 []
             );
@@ -101,7 +101,7 @@ class StreamHandler
         $ver = \explode('/', $parts[0])[1];
         $status = $parts[1];
         $reason = isset($parts[2]) ? $parts[2] : null;
-        $headers = \GuzzleHttp\headers_from_lines($hdrs);
+        $headers = \GuzzleHttp\Functions::headers_from_lines($hdrs);
         list($stream, $headers) = $this->checkDecode($options, $headers, $stream);
         $stream = Psr7\stream_for($stream);
         $sink = $stream;
@@ -156,7 +156,7 @@ class StreamHandler
     {
         // Automatically decode responses when instructed.
         if (!empty($options['decode_content'])) {
-            $normalizedKeys = \GuzzleHttp\normalize_header_keys($headers);
+            $normalizedKeys = \GuzzleHttp\Functions::normalize_header_keys($headers);
             if (isset($normalizedKeys['content-encoding'])) {
                 $encoding = $headers[$normalizedKeys['content-encoding']];
                 if ($encoding[0] === 'gzip' || $encoding[0] === 'deflate') {
@@ -412,7 +412,7 @@ class StreamHandler
             $scheme = $request->getUri()->getScheme();
             if (isset($value[$scheme])) {
                 if (!isset($value['no'])
-                    || !\GuzzleHttp\is_host_in_noproxy(
+                    || !\GuzzleHttp\Functions::is_host_in_noproxy(
                         $request->getUri()->getHost(),
                         $value['no']
                     )
@@ -436,7 +436,7 @@ class StreamHandler
             // PHP 5.6 or greater will find the system cert by default. When
             // < 5.6, use the Guzzle bundled cacert.
             if (PHP_VERSION_ID < 50600) {
-                $options['ssl']['cafile'] = \GuzzleHttp\default_ca_bundle();
+                $options['ssl']['cafile'] = \GuzzleHttp\Functions::default_ca_bundle();
             }
         } elseif (\is_string($value)) {
             $options['ssl']['cafile'] = $value;
@@ -503,7 +503,7 @@ class StreamHandler
         static $args = ['severity', 'message', 'message_code',
             'bytes_transferred', 'bytes_max'];
 
-        $value = \GuzzleHttp\debug_resource($value);
+        $value = \GuzzleHttp\Functions::debug_resource($value);
         $ident = $request->getMethod() . ' ' . $request->getUri()->withFragment('');
         $this->addNotification(
             $params,

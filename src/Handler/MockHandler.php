@@ -158,7 +158,7 @@ class MockHandler implements \Countable
             ) {
                 $this->queue[] = $value;
             } else {
-                throw new \TypeError('Expected a Response, Promise, Throwable or callable. Found ' . \GuzzleHttp\describe_type($value));
+                throw new \TypeError('Expected a Response, Promise, Throwable or callable. Found ' . \GuzzleHttp\Functions::describe_type($value));
             }
         }
     }
