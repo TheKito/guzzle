@@ -1,9 +1,9 @@
 <?php
-namespace GuzzleHttp\Handler;
+namespace Guzzle\Http\Handler;
 
-use GuzzleHttp\Promise as P;
-use GuzzleHttp\Promise\Promise;
-use GuzzleHttp\Promise\PromiseInterface;
+use Guzzle\Http\Promise as P;
+use Guzzle\Http\Promise\Promise;
+use Guzzle\Http\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -42,7 +42,7 @@ class CurlMultiHandler
 
         if (isset($options['select_timeout'])) {
             $this->selectTimeout = $options['select_timeout'];
-        } elseif ($selectTimeout = \GuzzleHttp\Functions::_getenv('GUZZLE_CURL_SELECT_TIMEOUT')) {
+        } elseif ($selectTimeout = \Guzzle\Http\Functions::_getenv('GUZZLE_CURL_SELECT_TIMEOUT')) {
             $this->selectTimeout = (int) $selectTimeout;
         } else {
             $this->selectTimeout = 1;
@@ -101,7 +101,7 @@ class CurlMultiHandler
     {
         // Add any delayed handles if needed.
         if ($this->delays) {
-            $currentTime = \GuzzleHttp\Functions::_current_time();
+            $currentTime = \Guzzle\Http\Functions::_current_time();
             foreach ($this->delays as $id => $delay) {
                 if ($currentTime >= $delay) {
                     unset($this->delays[$id]);
@@ -153,7 +153,7 @@ class CurlMultiHandler
         if (empty($easy->options['delay'])) {
             \curl_multi_add_handle($this->_mh, $easy->handle);
         } else {
-            $this->delays[$id] = \GuzzleHttp\Functions::_current_time() + ($easy->options['delay'] / 1000);
+            $this->delays[$id] = \Guzzle\Http\Functions::_current_time() + ($easy->options['delay'] / 1000);
         }
     }
 
@@ -205,7 +205,7 @@ class CurlMultiHandler
 
     private function timeToNext(): int
     {
-        $currentTime = \GuzzleHttp\Functions::_current_time();
+        $currentTime = \Guzzle\Http\Functions::_current_time();
         $nextTime = PHP_INT_MAX;
         foreach ($this->delays as $time) {
             if ($time < $nextTime) {

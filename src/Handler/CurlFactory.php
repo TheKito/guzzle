@@ -1,13 +1,13 @@
 <?php
-namespace GuzzleHttp\Handler;
+namespace Guzzle\Http\Handler;
 
-use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise\FulfilledPromise;
-use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\LazyOpenStream;
-use GuzzleHttp\TransferStats;
+use Guzzle\Http\Exception\ConnectException;
+use Guzzle\Http\Exception\RequestException;
+use Guzzle\Http\Promise\FulfilledPromise;
+use Guzzle\Http\Promise\PromiseInterface;
+use Guzzle\Http\Psr7;
+use Guzzle\Http\Psr7\LazyOpenStream;
+use Guzzle\Http\TransferStats;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -168,7 +168,7 @@ class CurlFactory implements CurlFactoryInterface
         // If an exception was encountered during the onHeaders event, then
         // return a rejected promise that wraps that exception.
         if ($easy->onHeadersException) {
-            return \GuzzleHttp\Promise\rejection_for(
+            return \Guzzle\Http\Promise\rejection_for(
                 new RequestException(
                     'An error was encountered during the on_headers event',
                     $easy->request,
@@ -200,7 +200,7 @@ class CurlFactory implements CurlFactoryInterface
             ? new ConnectException($message, $easy->request, null, $ctx)
             : new RequestException($message, $easy->request, $easy->response, null, $ctx);
 
-        return \GuzzleHttp\Promise\rejection_for($error);
+        return \Guzzle\Http\Promise\rejection_for($error);
     }
 
     /**
@@ -382,7 +382,7 @@ class CurlFactory implements CurlFactoryInterface
         if (isset($options['sink'])) {
             $sink = $options['sink'];
             if (!\is_string($sink)) {
-                $sink = \GuzzleHttp\Psr7\stream_for($sink);
+                $sink = \Guzzle\Http\Psr7\stream_for($sink);
             } elseif (!\is_dir(\dirname($sink))) {
                 // Ensure that the directory exists before failing in curl.
                 throw new \RuntimeException(\sprintf(
@@ -434,7 +434,7 @@ class CurlFactory implements CurlFactoryInterface
                 if (isset($options['proxy'][$scheme])) {
                     $host = $easy->request->getUri()->getHost();
                     if (!isset($options['proxy']['no']) ||
-                        !\GuzzleHttp\Functions::is_host_in_noproxy($host, $options['proxy']['no'])
+                        !\Guzzle\Http\Functions::is_host_in_noproxy($host, $options['proxy']['no'])
                     ) {
                         $conf[CURLOPT_PROXY] = $options['proxy'][$scheme];
                     }
@@ -494,7 +494,7 @@ class CurlFactory implements CurlFactoryInterface
         }
 
         if (!empty($options['debug'])) {
-            $conf[CURLOPT_STDERR] = \GuzzleHttp\Functions::debug_resource($options['debug']);
+            $conf[CURLOPT_STDERR] = \Guzzle\Http\Functions::debug_resource($options['debug']);
             $conf[CURLOPT_VERBOSE] = true;
         }
     }

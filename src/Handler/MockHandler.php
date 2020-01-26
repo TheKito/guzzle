@@ -1,10 +1,10 @@
 <?php
-namespace GuzzleHttp\Handler;
+namespace Guzzle\Http\Handler;
 
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\TransferStats;
+use Guzzle\Http\Exception\RequestException;
+use Guzzle\Http\HandlerStack;
+use Guzzle\Http\Promise\PromiseInterface;
+use Guzzle\Http\TransferStats;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -107,8 +107,8 @@ class MockHandler implements \Countable
         }
 
         $response = $response instanceof \Throwable
-            ? \GuzzleHttp\Promise\rejection_for($response)
-            : \GuzzleHttp\Promise\promise_for($response);
+            ? \Guzzle\Http\Promise\rejection_for($response)
+            : \Guzzle\Http\Promise\promise_for($response);
 
         return $response->then(
             function (?ResponseInterface $value) use ($request, $options) {
@@ -137,7 +137,7 @@ class MockHandler implements \Countable
                 if ($this->onRejected) {
                     \call_user_func($this->onRejected, $reason);
                 }
-                return \GuzzleHttp\Promise\rejection_for($reason);
+                return \Guzzle\Http\Promise\rejection_for($reason);
             }
         );
     }
@@ -158,7 +158,7 @@ class MockHandler implements \Countable
             ) {
                 $this->queue[] = $value;
             } else {
-                throw new \TypeError('Expected a Response, Promise, Throwable or callable. Found ' . \GuzzleHttp\Functions::describe_type($value));
+                throw new \TypeError('Expected a Response, Promise, Throwable or callable. Found ' . \Guzzle\Http\Functions::describe_type($value));
             }
         }
     }

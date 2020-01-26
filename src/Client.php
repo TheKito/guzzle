@@ -1,10 +1,10 @@
 <?php
-namespace GuzzleHttp;
+namespace Guzzle\Http;
 
-use GuzzleHttp\Cookie\CookieJar;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\InvalidArgumentException;
-use GuzzleHttp\Promise\PromiseInterface;
+use Guzzle\Http\Cookie\CookieJar;
+use Guzzle\Http\Exception\GuzzleException;
+use Guzzle\Http\Exception\InvalidArgumentException;
+use Guzzle\Http\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
@@ -34,7 +34,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
      * - handler: (callable) Function that transfers HTTP requests over the
      *   wire. The function is called with a Psr7\Http\Message\RequestInterface
      *   and array of transfer options, and must return a
-     *   GuzzleHttp\Promise\PromiseInterface that is fulfilled with a
+     *   Guzzle\Http\Promise\PromiseInterface that is fulfilled with a
      *   Psr7\Http\Message\ResponseInterface on success. "handler" is a
      *   constructor only option that cannot be overridden in per/request
      *   options. If no handler is provided, a default handler will be created
@@ -46,7 +46,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
      *
      * @param array $config Client configuration settings.
      *
-     * @see \GuzzleHttp\RequestOptions for a list of available request options.
+     * @see \Guzzle\Http\RequestOptions for a list of available request options.
      */
     public function __construct(array $config = [])
     {
@@ -88,7 +88,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
      * Asynchronously send an HTTP request.
      *
      * @param array $options Request options to apply to the given
-     *                       request and to the transfer. See \GuzzleHttp\RequestOptions.
+     *                       request and to the transfer. See \Guzzle\Http\RequestOptions.
      */
     public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
@@ -105,7 +105,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
      * Send an HTTP request.
      *
      * @param array $options Request options to apply to the given
-     *                       request and to the transfer. See \GuzzleHttp\RequestOptions.
+     *                       request and to the transfer. See \Guzzle\Http\RequestOptions.
      *
      * @throws GuzzleException
      */
@@ -139,7 +139,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
      *
      * @param string              $method  HTTP method
      * @param string|UriInterface $uri     URI object or string.
-     * @param array               $options Request options to apply. See \GuzzleHttp\RequestOptions.
+     * @param array               $options Request options to apply. See \Guzzle\Http\RequestOptions.
      */
     public function requestAsync(string $method, $uri = '', array $options = []): PromiseInterface
     {
@@ -169,7 +169,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
      *
      * @param string              $method  HTTP method.
      * @param string|UriInterface $uri     URI object or string.
-     * @param array               $options Request options to apply. See \GuzzleHttp\RequestOptions.
+     * @param array               $options Request options to apply. See \Guzzle\Http\RequestOptions.
      *
      * @throws GuzzleException
      */
@@ -234,15 +234,15 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
         // We can only trust the HTTP_PROXY environment variable in a CLI
         // process due to the fact that PHP has no reliable mechanism to
         // get environment variables that start with "HTTP_".
-        if (PHP_SAPI === 'cli' && ($proxy = \GuzzleHttp\Functions::_getenv('HTTP_PROXY'))) {
+        if (PHP_SAPI === 'cli' && ($proxy = \Guzzle\Http\Functions::_getenv('HTTP_PROXY'))) {
             $defaults['proxy']['http'] = $proxy;
         }
 
-        if ($proxy = \GuzzleHttp\Functions::_getenv('HTTPS_PROXY')) {
+        if ($proxy = \Guzzle\Http\Functions::_getenv('HTTPS_PROXY')) {
             $defaults['proxy']['https'] = $proxy;
         }
 
-        if ($noProxy = \GuzzleHttp\Functions::_getenv('NO_PROXY')) {
+        if ($noProxy = \Guzzle\Http\Functions::_getenv('NO_PROXY')) {
             $cleanedNoProxy = \str_replace(' ', '', $noProxy);
             $defaults['proxy']['no'] = \explode(',', $cleanedNoProxy);
         }
@@ -313,7 +313,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
      * The URI of the request is not modified and the request options are used
      * as-is without merging in default options.
      *
-     * @param array $options See \GuzzleHttp\RequestOptions.
+     * @param array $options See \Guzzle\Http\RequestOptions.
      */
     private function transfer(RequestInterface $request, array $options): PromiseInterface
     {
@@ -363,7 +363,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
         }
 
         if (isset($options['json'])) {
-            $options['body'] = \GuzzleHttp\Functions::json_encode($options['json']);
+            $options['body'] = \Guzzle\Http\Functions::json_encode($options['json']);
             unset($options['json']);
             // Ensure that we don't have the header in different case and set the new value.
             $options['_conditional'] = Psr7\_caseless_remove(['Content-Type'], $options['_conditional']);

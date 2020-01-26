@@ -1,9 +1,9 @@
 <?php
-namespace GuzzleHttp;
+namespace Guzzle\Http;
 
-use GuzzleHttp\Cookie\CookieJarInterface;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise\PromiseInterface;
+use Guzzle\Http\Cookie\CookieJarInterface;
+use Guzzle\Http\Exception\RequestException;
+use Guzzle\Http\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -28,7 +28,7 @@ final class Middleware
                 if (empty($options['cookies'])) {
                     return $handler($request, $options);
                 } elseif (!($options['cookies'] instanceof CookieJarInterface)) {
-                    throw new \InvalidArgumentException('cookies must be an instance of GuzzleHttp\Cookie\CookieJarInterface');
+                    throw new \InvalidArgumentException('cookies must be an instance of Guzzle\Http\Cookie\CookieJarInterface');
                 }
                 $cookieJar = $options['cookies'];
                 $request = $cookieJar->withCookieHeader($request);
@@ -103,7 +103,7 @@ final class Middleware
                             'error'    => $reason,
                             'options'  => $options
                         ];
-                        return \GuzzleHttp\Promise\rejection_for($reason);
+                        return \Guzzle\Http\Promise\rejection_for($reason);
                     }
                 );
             };
@@ -197,9 +197,9 @@ final class Middleware
                         $response = $reason instanceof RequestException
                             ? $reason->getResponse()
                             : null;
-                        $message = $formatter->format($request, $response, \GuzzleHttp\Promise\exception_for($reason));
+                        $message = $formatter->format($request, $response, \Guzzle\Http\Promise\exception_for($reason));
                         $logger->notice($message);
-                        return \GuzzleHttp\Promise\rejection_for($reason);
+                        return \Guzzle\Http\Promise\rejection_for($reason);
                     }
                 );
             };
