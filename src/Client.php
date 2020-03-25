@@ -621,7 +621,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
         $body = isset($options['body']) ? $options['body'] : null;
         $version = isset($options['version']) ? $options['version'] : '1.1';
         // Merge the URI into the base URI.
-        $uri = $this->buildUri(Psr7\uri_for($uri), $options);
+        $uri = $this->buildUri(Psr7\Functions::uri_for($uri), $options);
         if (\is_array($body)) {
             throw $this->invalidBody();
         }
@@ -794,7 +794,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
         $handler = $options['handler'];
 
         try {
-            return Promise\promise_for($handler($request, $options));
+            return Promise\Functions::promise_for($handler($request, $options));
         } catch (\Exception $e) {
             return Promise\rejection_for($e);
         }
@@ -900,7 +900,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
             }
         }
 
-        $request = Psr7\modify_request($request, $modify);
+        $request = Psr7\Functions::modify_request($request, $modify);
         if ($request->getBody() instanceof Psr7\MultipartStream) {
             // Use a multipart/form-data POST if a Content-Type is not set.
             // Ensure that we don't have the header in different case and set the new value.
@@ -918,7 +918,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
                     $modify['set_headers'][$k] = $v;
                 }
             }
-            $request = Psr7\modify_request($request, $modify);
+            $request = Psr7\Functions::modify_request($request, $modify);
             // Don't pass this internal value along to middleware/handlers.
             unset($options['_conditional']);
         }

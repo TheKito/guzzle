@@ -651,7 +651,7 @@ class StreamHandler
         $reason = isset($parts[2]) ? $parts[2] : null;
         $headers = Utils::headersFromLines($hdrs);
         list($stream, $headers) = $this->checkDecode($options, $headers, $stream);
-        $stream = Psr7\stream_for($stream);
+        $stream = Psr7\Functions::stream_for($stream);
         $sink = $stream;
 
         if (\strcasecmp('HEAD', $request->getMethod())) {
@@ -697,7 +697,7 @@ class StreamHandler
 
         return \is_string($sink)
             ? new Psr7\LazyOpenStream($sink, 'w+')
-            : Psr7\stream_for($sink);
+            : Psr7\Functions::stream_for($sink);
     }
 
     private function checkDecode(array $options, array $headers, $stream): array
