@@ -105,7 +105,7 @@ class StreamHandler
         $reason = isset($parts[2]) ? $parts[2] : null;
         $headers = Utils::headersFromLines($hdrs);
         list($stream, $headers) = $this->checkDecode($options, $headers, $stream);
-        $stream = Psr7\stream_for($stream);
+        $stream = Psr7\Functions::stream_for($stream);
         $sink = $stream;
 
         if (\strcasecmp('HEAD', $request->getMethod())) {
