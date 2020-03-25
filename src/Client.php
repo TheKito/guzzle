@@ -149,7 +149,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
         $body = isset($options['body']) ? $options['body'] : null;
         $version = isset($options['version']) ? $options['version'] : '1.1';
         // Merge the URI into the base URI.
-        $uri = $this->buildUri(Psr7\uri_for($uri), $options);
+        $uri = $this->buildUri(Psr7\Functions::uri_for($uri), $options);
         if (\is_array($body)) {
             throw $this->invalidBody();
         }
