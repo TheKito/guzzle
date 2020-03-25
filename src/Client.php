@@ -428,7 +428,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
             }
         }
 
-        $request = Psr7\modify_request($request, $modify);
+        $request = Psr7\Functions::modify_request($request, $modify);
         if ($request->getBody() instanceof Psr7\MultipartStream) {
             // Use a multipart/form-data POST if a Content-Type is not set.
             // Ensure that we don't have the header in different case and set the new value.
