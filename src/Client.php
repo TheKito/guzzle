@@ -322,7 +322,7 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
         $handler = $options['handler'];
 
         try {
-            return Promise\promise_for($handler($request, $options));
+            return Promise\Functions::promise_for($handler($request, $options));
         } catch (\Exception $e) {
             return Promise\rejection_for($e);
         }
