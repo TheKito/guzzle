@@ -19,6 +19,10 @@ Please make sure:
 - Classes `GuzzleHttp\Exception\BadResponseException`, `GuzzleHttp\Exception\ClientException`, 
   `GuzzleHttp\Exception\ServerException` can no longer be initialized with an empty
   Response as argument.
+- Class `GuzzleHttp\Exception\ConnectException` now extends `GuzzleHttp\Exception\TransferException`
+  instead of `GuzzleHttp\Exception\RequestException`.
+- Function `GuzzleHttp\Exception\ConnectException::getResponse()` is removed.
+- Function `GuzzleHttp\Exception\ConnectException::hasResponse()` is removed.
 - Constant `GuzzleHttp\ClientInterface::VERSION` is removed.
 - Function `GuzzleHttp\Exception\RequestException::getResponseBodySummary` is removed.
   Use `\GuzzleHttp\Psr7\get_message_body_summary` as an alternative.
@@ -48,7 +52,7 @@ For the full diff you can check [here](https://github.com/guzzle/guzzle/compare/
 5.0 to 6.0
 ----------
 
-Guzzle now uses [PSR-7](http://www.php-fig.org/psr/psr-7/) for HTTP messages.
+Guzzle now uses [PSR-7](https://www.php-fig.org/psr/psr-7/) for HTTP messages.
 Due to the fact that these messages are immutable, this prompted a refactoring
 of Guzzle to use a middleware based system rather than an event system. Any
 HTTP message interaction (e.g., `GuzzleHttp\Message\Request`) need to be
@@ -211,7 +215,7 @@ passing a `GuzzleHttp\Adapter\AdapterInterface`, you must now pass a PHP
 
 ## Removed Fluent Interfaces
 
-[Fluent interfaces were removed](http://ocramius.github.io/blog/fluent-interfaces-are-evil)
+[Fluent interfaces were removed](https://ocramius.github.io/blog/fluent-interfaces-are-evil/)
 from the following classes:
 
 - `GuzzleHttp\Collection`
@@ -864,7 +868,7 @@ HeaderInterface (e.g. toArray(), getAll(), etc.).
 3.3 to 3.4
 ----------
 
-Base URLs of a client now follow the rules of http://tools.ietf.org/html/rfc3986#section-5.2.2 when merging URLs.
+Base URLs of a client now follow the rules of https://tools.ietf.org/html/rfc3986#section-5.2.2 when merging URLs.
 
 3.2 to 3.3
 ----------

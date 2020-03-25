@@ -32,6 +32,9 @@
         "guzzlehttp/psr7": "^1.6.1",
         "psr/http-client": "^1.0"
     },
+    "provide": {
+        "psr/http-client-implementation": "1.0"
+    },
     "require-dev": {
         "ext-curl": "*",
         "ergebnis/composer-normalize": "^2.0",
@@ -40,6 +43,7 @@
         "psr/log": "^1.1"
     },
     "suggest": {
+        "ext-curl": "Required for CURL handler support",
         "ext-intl": "Required for Internationalized Domain Name (IDN) support",
         "psr/log": "Required for using the Log middleware"
     },
